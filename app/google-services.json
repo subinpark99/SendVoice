@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "982012123453",
+    "project_id": "sendalarm-be5c2",
+    "storage_bucket": "sendalarm-be5c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982012123453:android:2c44fcaebbdce982560d54",
+        "android_client_info": {
+          "package_name": "com.example.sendalarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982012123453-ff6fiq001rlpk8sr779uv487be4ghthq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD41YZych3iTNHMuD9US3pEn8zhbsfMQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982012123453-ff6fiq001rlpk8sr779uv487be4ghthq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
