@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/friend_list_border">
+
+    <TextView
+        android:id="@+id/sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="@string/sender"
+        android:textColor="@color/deep_green"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sender_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@id/sender"
+        app:layout_constraintTop_toTopOf="@id/sender" />
+
+    <TextView
+        android:id="@+id/receiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="@string/receiver"
+        android:textColor="@color/deep_green"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sender" />
+
+    <TextView
+        android:id="@+id/receiver_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@id/receiver"
+        app:layout_constraintTop_toTopOf="@id/receiver" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="@string/record_title"
+        android:textColor="@color/deep_green"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/receiver" />
+
+    <EditText
+        android:id="@+id/record_title_et"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:hint="@string/put_title"
+        android:paddingStart="10dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/deep_green"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintStart_toEndOf="@id/title"
+        app:layout_constraintTop_toTopOf="@id/title" />
+
+    <TextView
+        android:id="@+id/record_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="@string/record"
+        android:textColor="@color/deep_green"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/friend_list_border"
+        android:backgroundTint="@color/light_gray"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/record_tv">
+
+        <TextView
+            android:id="@+id/record_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/record_time"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/record_start_iv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="40dp"
+            android:src="@drawable/icon_record_start" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/record_pause_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="40dp"
+            android:src="@drawable/icon_reset" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/record_result_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="9dp"
+        android:text="sserser.jpg"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout" />
+
+    <TextView
+        android:id="@+id/send_record_tv"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:background="@drawable/friend_list_border"
+        android:backgroundTint="@color/deep_green"
+        android:padding="10dp"
+        android:text="@string/send_record"
+        android:textColor="@color/light_gray"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/record_result_tv" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

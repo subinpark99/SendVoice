@@ -2,4 +2,13 @@
     <string name="app_name">SendAlarm</string>
     <string name="username">수비니</string>
     <string name="useremail">123@naver.com</string>
+    <string name="sender">보내는 사람 :</string>
+    <string name="receiver">받는 사람 :</string>
+    <string name="record_title">제목 :</string>
+    <string name="record">녹음하기</string>
+    <string name="record_time">00:00</string>
+    <string name="send_record">전송하기</string>
+    <string name="put_title">제목을 입력해주세요</string>
+    <string name="send_date">23.07.25 13:02</string>
+    <string name="search_id">친구 검색하기</string>
 </resources>
