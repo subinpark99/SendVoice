@@ -11,4 +11,8 @@
     <string name="put_title">제목을 입력해주세요</string>
     <string name="send_date">23.07.25 13:02</string>
     <string name="search_id">친구 검색하기</string>
+    <string name="put_friend_email">이메일을 입력해주세요!</string>
+    <string name="invite_with_kakao">카카오톡으로 친구 초대 하기</string>
+    <string name="logout">로그아웃</string>
+    <string name="withdraw">회원탈퇴</string>
 </resources>

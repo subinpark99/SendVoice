@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/play_arrow/baseline_play_arrow_24.xml" />
+                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/record_voice_over/baseline_record_voice_over_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,7 +29,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="264653" />
-                            <entry key="outputName" value="icon_record_play" />
+                            <entry key="outputName" value="icon_logo" />
                           </map>
                         </option>
                       </PersistentState>

@@ -41,8 +41,53 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/search_id"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="15dp"
-        android:textSize="23sp"/>
+        android:textSize="20sp"/>
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/friend_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:queryHint="@string/put_friend_email"
+        app:iconifiedByDefault="false"
+        app:queryBackground="@color/transparent"
+        android:background="@drawable/friend_list_border"/>
+
+
+    <Button
+        android:id="@+id/friend_invite_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="@string/invite_with_kakao"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="25dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/logout_tv"
+            android:text="@string/logout"
+            android:textSize="17sp"
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/withdraw_tv"
+            android:text="@string/withdraw"
+            android:layout_marginStart="50dp"
+            android:textSize="17sp"
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </LinearLayout>

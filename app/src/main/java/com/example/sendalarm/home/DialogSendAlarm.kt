@@ -25,13 +25,21 @@ class DialogSendAlarm: DialogFragment(), View.OnClickListener {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
+        bind()
+
         return binding.root
     }
 
+    private fun bind()
+    {
+        binding.closeBtn.setOnClickListener {
+            dismiss()
+        }
+    }
 
     override fun onResume() {
         super.onResume()
-        context?.dialogFragmentResize(this, 0.9f, 0.6f)
+        context?.dialogFragmentResize(this, 0.9f, 0.65f)
     }
 
     private fun Context.dialogFragmentResize(
