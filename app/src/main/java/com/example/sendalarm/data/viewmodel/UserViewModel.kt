@@ -17,7 +17,7 @@ class UserViewModel @Inject constructor(private val repo: UserRepository) : View
     private val _signInState = MutableLiveData<Resource<User>>()
     val signInState: LiveData<Resource<User>> = _signInState
 
-    fun login() =
+    fun loginWithKakao() =
         viewModelScope.launch {
             repo.loginWithKakao({
                 _signInState.postValue(Resource.Success(it))

@@ -1,4 +1,4 @@
-package com.example.sendalarm.setting
+package com.example.sendalarm.ui.setting
 
 import android.os.Bundle
 import android.view.LayoutInflater

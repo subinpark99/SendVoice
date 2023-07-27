@@ -1,22 +1,17 @@
 package com.example.sendalarm.util
 
 import android.app.Application
-import com.example.sendalarm.util.kakao.KakaoSDKAdapter
+import com.example.sendalarm.BuildConfig
+import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class MyApplication : Application() {
 
-    companion object{
-        var instance : MyApplication? = null
-    }
-
     override fun onCreate() {
         super.onCreate()
 
-        instance = this
-        if( KakaoSDK.getAdapter() == null){
-            KakaoSDK.init(KakaoSDKAdapter(getAppContext()))
-        }
+        // Kakao Sdk 초기화
+        KakaoSdk.init(this,BuildConfig.KAKAO_APP_KEY)
     }
 }

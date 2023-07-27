@@ -25,6 +25,8 @@ android {
         buildConfigField "String", "FCM_SERVER_KEY", properties['fcm_server_key']
         buildConfigField "String", "KAKAO_APP_KEY", properties['kakao.app.key']
         manifestPlaceholders = [ KAKAO_APP_KEY : kakaoApiKey]
+        buildConfigField "String", "IPCONFIG", properties['ipconfig']
+
     }
 
     buildTypes {
@@ -103,6 +105,7 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
 
     // kakao login
-    implementation "com.kakao.sdk:v2-user:2.15.0"
+    implementation "com.kakao.sdk:v2-all:2.15.0"
 
+    implementation 'com.android.volley:volley:1.2.1'
 }

@@ -1,4 +1,4 @@
-package com.example.sendalarm.start
+package com.example.sendalarm.ui.start
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.sendalarm.data.entity.User
 import com.example.sendalarm.data.viewmodel.UserViewModel
 import com.example.sendalarm.databinding.ActivitySplashBinding
-import com.example.sendalarm.util.MyApplication
 import com.example.sendalarm.util.Preference
 import com.example.sendalarm.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,14 +34,26 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         init()
-        loginWithKakao()
+        autoLogin()
     }
 
+    private fun autoLogin() {
+
+        val flag = preference.getAutoLogin()
+
+        if (flag) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            loginWithKakao()
+        }
+    }
 
     private fun loginWithKakao() {
 
         binding.kakaoLoginIv.setOnClickListener {
-            viewModel.login()
+            viewModel.loginWithKakao()
         }
 
         viewModel.signInState.observe(this) {
@@ -67,7 +78,7 @@ class SplashActivity : AppCompatActivity() {
 
     }
 
-    private fun init(){
+    private fun init() {
 
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -79,7 +90,6 @@ class SplashActivity : AppCompatActivity() {
             )
         }
     }
-
 
 
 }

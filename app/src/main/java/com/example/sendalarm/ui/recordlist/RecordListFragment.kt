@@ -1,4 +1,4 @@
-package com.example.sendalarm.recordlist
+package com.example.sendalarm.ui.recordlist
 
 import android.os.Build
 import android.os.Bundle
@@ -44,7 +44,7 @@ class RecordListFragment : Fragment() {
         val currentDate= LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         rvAdapter.sendItem(listOf(SendRecord("s","수비니","머하노", null,currentDate)))
 
-        rvAdapter.setItemClickListener(object : RecordListAdapter.ClickInterface{
+        rvAdapter.setItemClickListener(object : RecordListAdapter.ClickInterface {
             override fun onRecordClicked() {
 
             }

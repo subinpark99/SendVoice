@@ -1,4 +1,4 @@
-package com.example.sendalarm.home
+package com.example.sendalarm.ui.home
 
 import android.content.Context
 import android.graphics.Color

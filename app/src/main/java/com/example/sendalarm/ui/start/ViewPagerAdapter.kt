@@ -1,4 +1,4 @@
-package com.example.sendalarm.start
+package com.example.sendalarm.ui.start
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

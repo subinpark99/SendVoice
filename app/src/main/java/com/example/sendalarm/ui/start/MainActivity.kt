@@ -1,14 +1,13 @@
-package com.example.sendalarm.start
+package com.example.sendalarm.ui.start
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.sendalarm.R
-import com.example.sendalarm.recordlist.RecordListFragment
+import com.example.sendalarm.ui.recordlist.RecordListFragment
 import com.example.sendalarm.databinding.ActivityMainBinding
-import com.example.sendalarm.home.HomeFragment
-import com.example.sendalarm.setting.SettingFragment
-import com.example.sendalarm.util.MyApplication
+import com.example.sendalarm.ui.home.HomeFragment
+import com.example.sendalarm.ui.setting.SettingFragment
 import com.example.sendalarm.util.Preference
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,10 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val s=preference.getUser()
-        Log.d("s",s.toString())
-
 
         initViewPager()
     }

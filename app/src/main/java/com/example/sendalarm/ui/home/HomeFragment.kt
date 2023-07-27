@@ -1,4 +1,4 @@
-package com.example.sendalarm.home
+package com.example.sendalarm.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
 
     private fun onRecyclerView(){
 
-        val rvAdapter=FriendListAdapter()
+        val rvAdapter= FriendListAdapter()
         binding.homeRv.adapter=rvAdapter
         binding.homeRv.layoutManager=
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
             FriendList("seer","재현","sere@naver.com")
         ))
 
-        rvAdapter.setItemClickListener(object :FriendListAdapter.ClickInterface{
+        rvAdapter.setItemClickListener(object : FriendListAdapter.ClickInterface {
             override fun onMemberClicked(friendUid: String) {
 
                 DialogSendAlarm().show(parentFragmentManager,"sendAlarm")

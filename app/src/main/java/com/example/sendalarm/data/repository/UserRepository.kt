@@ -1,79 +1,121 @@
 package com.example.sendalarm.data.repository
 
+
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.util.Base64
 import android.util.Log
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.example.sendalarm.data.entity.User
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.ClientError
-import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import org.json.JSONObject
+import com.android.volley.Response
+import com.example.sendalarm.BuildConfig
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(
+open class UserRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val fireStore: FirebaseFirestore,
     private val fcm: FirebaseMessaging,
     private val context: Context
 ) {
 
-   private fun currentUid()=auth.currentUser!!.uid
+    private fun Context.isKakaoTalkLoginAvailable(): Boolean {
+        return UserApiClient.instance.isKakaoTalkLoginAvailable(this)
+    }
 
     fun loginWithKakao(
         success: (User) -> Unit,
         failure: (String) -> Unit
     ) {
+        if (context.isKakaoTalkLoginAvailable()) {
+            UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
+                if (error != null) {
+                    Log.e("LOGIN", "카카오톡으로 로그인 실패", error)
 
-        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+                    // If KakaoTalk login fails, fall back to KakaoAccount login
+                    loginWithKaKaoAccount(success, failure)
+                } else if (token != null) {
+                    Log.i("LOGIN", "카카오톡으로 로그인 성공")
+                    UserApiClient.instance.me { _, _ ->
+                        getFirebaseJwt(token.accessToken).continueWith { task ->
+                            val firebaseToken = task.result
+                            signUpWithFirebase(firebaseToken!!, success, failure)
+                        }
+                    }
+                }
+            }
+        } else {
+            // KakaoTalk login is not available, perform KakaoAccount login
+            loginWithKaKaoAccount(success, failure)
+        }
+    }
+
+    private fun loginWithKaKaoAccount(success: (User) -> Unit, failure: (String) -> Unit) {
+
+        UserApiClient.instance.loginWithKakaoAccount(context) { token, error ->
             if (error != null) {
                 Log.e("LOGIN", "카카오 계정으로 로그인 실패", error)
             } else if (token != null) {
                 Log.i("LOGIN", "카카오 계정으로 로그인 성공")
 
-                UserApiClient.instance.me { user, _ ->
-                    val nickname = user?.kakaoAccount?.profile?.nickname.toString()
-                    val email = user?.kakaoAccount?.email.toString()
-
-                    signUpWithFirebase(token.accessToken, nickname, email, success, failure)
-                }
-
-            }
-        }
-
-        // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-        if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
-            UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
-                if (error != null) {
-                    Log.e("LOGIN", "카카오톡으로 로그인 실패", error)
-
-                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                        return@loginWithKakaoTalk
-                    }
-
-                    UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
-                } else if (token != null) {
-                    Log.i("LOGIN", "카카오톡으로 로그인 성공")
-                    UserApiClient.instance.me { user, _ ->
-                        val nickname = user?.kakaoAccount?.profile?.nickname.toString()
-                        val email = user?.kakaoAccount?.email.toString()
-
-                        signUpWithFirebase(token.accessToken, nickname, email, success, failure)
+                UserApiClient.instance.me { _, _ ->
+                    getFirebaseJwt(token.accessToken).continueWith { task ->
+                        val firebaseToken = task.result
+                        signUpWithFirebase(firebaseToken!!, success, failure)
                     }
                 }
             }
-        } else {
-            UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
         }
+    }
+
+
+    open fun getFirebaseJwt(kakaoAccessToken: String): Task<String> {
+        Log.d(TAG, "LoginActivity - getFirebaseJwt() called")
+        val source = TaskCompletionSource<String>()
+        val queue = Volley.newRequestQueue(context)
+        val url = "http://${BuildConfig.IPCONFIG}:8000/verifyToken" // validation server
+        val validationObject: HashMap<String?, String?> = HashMap()
+        validationObject["token"] = kakaoAccessToken
+
+        val request: JsonObjectRequest = object : JsonObjectRequest(
+            Method.POST, url,
+            JSONObject(validationObject as Map<*, *>),
+            Response.Listener { response ->
+                try {
+                    val firebaseToken = response.getString("firebase_token")
+                    source.setResult(firebaseToken)
+                } catch (e: Exception) {
+                    source.setException(e)
+                }
+            },
+            Response.ErrorListener { error ->
+                Log.e(TAG, error.toString())
+                source.setException(error)
+            }) {
+            override fun getParams(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                params["Authorization"] = String.format(
+                    "Basic %s", Base64.encodeToString(
+                        String.format("%s:%s", "token", kakaoAccessToken)
+                            .toByteArray(), Base64.DEFAULT
+                    )
+                )
+                return params
+            }
+        }
+        queue.add(request)
+        return source.task // call validation server and retrieve firebase token
     }
 
     private fun signUpWithFirebase(
         token: String,
-        nickname: String,
-        email: String,
         success: (User) -> Unit,
         failure: (String) -> Unit
     ) {
@@ -83,12 +125,15 @@ class UserRepository @Inject constructor(
                 getFcmToken(
                     {
                         val userId = auth.uid.toString()
-                        val user = User(userId, it, nickname, email)
+                        val nickname = auth.currentUser!!.displayName
+                        val email = auth.currentUser!!.email
+                        val user = User(userId, it, nickname!!, email!!)
                         success(user)
-                        fireStore.collection("User").document(email).set(user)
+                        fireStore.collection("User").document(userId).set(user)
                     },
                     failure = { failure(it) },
                 )
+                Log.d("createUser", "Success")
             }
             .addOnFailureListener {
                 failure(it.toString())
@@ -106,20 +151,6 @@ class UserRepository @Inject constructor(
         }.addOnFailureListener {
             failure(it.toString())
         }
-    }
-
-    fun newToken(success: (String) -> Unit, failure: (String) -> Unit) {
-        fcm.token.addOnSuccessListener {
-            val token = it
-            success(token)
-        }.addOnFailureListener { exception ->
-            failure(exception.toString())
-        }
-    }
-
-
-    fun updateFcmToken(newToken: String) {
-        fireStore.collection("users").document(currentUid()).update("token", newToken)
     }
 
 

@@ -1,26 +1,26 @@
-package com.example.sendalarm.home
+package com.example.sendalarm.ui.recordlist
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sendalarm.data.entity.FriendList
-import com.example.sendalarm.databinding.ItemFriendsBinding
+import com.example.sendalarm.data.entity.SendRecord
+import com.example.sendalarm.databinding.ItemRecordListBinding
 
-class FriendListAdapter :
-    RecyclerView.Adapter<FriendListAdapter.ViewHolder>() {
+class RecordListAdapter :
+    RecyclerView.Adapter<RecordListAdapter.ViewHolder>() {
 
-    private val items = arrayListOf<FriendList>()
+    private val items = arrayListOf<SendRecord>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun sendItem(it: List<FriendList>) {
+    fun sendItem(it: List<SendRecord>) {
         items.clear()
         items.addAll(it)
         notifyDataSetChanged()
     }
 
     interface ClickInterface {
-        fun onMemberClicked(friendUid: String)
+        fun onRecordClicked()
     }
 
     private lateinit var itemClickListener: ClickInterface
@@ -30,8 +30,8 @@ class FriendListAdapter :
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemFriendsBinding =
-            ItemFriendsBinding.inflate(
+        val binding: ItemRecordListBinding =
+            ItemRecordListBinding.inflate(
                 LayoutInflater.from(viewGroup.context),
                 viewGroup,
                 false
@@ -44,19 +44,20 @@ class FriendListAdapter :
         holder.apply {
             bind(items[position])
 
-            binding.sendRecordIv.setOnClickListener {
-                itemClickListener.onMemberClicked(items[position].friendUid)
+            binding.recordPlayIv.setOnClickListener {
+                itemClickListener.onRecordClicked()
             }
         }
     }
 
     override fun getItemCount(): Int = items.size
 
-    inner class ViewHolder(val binding: ItemFriendsBinding) :
+    inner class ViewHolder(val binding: ItemRecordListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: FriendList) {
-            binding.usernameTv.text = item.friendName
-            binding.useremailTv.text = item.email
+        fun bind(item: SendRecord) {
+            binding.usernameTv.text = item.receiverName
+            binding.titleTv.text = item.title
+            binding.sendDateTv.text = item.time.toString()
         }
     }
 }
