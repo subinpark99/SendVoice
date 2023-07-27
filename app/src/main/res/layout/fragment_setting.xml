@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,10 +10,10 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:background="@drawable/friend_list_border"
         android:backgroundTint="@color/light_gray"
         android:orientation="vertical"
-        android:layout_margin="10dp"
         android:padding="15dp">
 
         <TextView
@@ -21,8 +22,8 @@
             android:layout_height="match_parent"
             android:text="@string/username"
             android:textColor="@color/deep_green"
-            android:textStyle="bold"
             android:textSize="27sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,9 +31,9 @@
             android:id="@+id/useremail_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="20sp"
             android:layout_marginTop="5dp"
-            android:text="@string/useremail"/>
+            android:text="@string/useremail"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -40,53 +41,61 @@
         android:id="@+id/invite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/search_id"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="15dp"
-        android:textSize="20sp"/>
+        android:layout_marginTop="20dp"
+        android:text="@string/search_id"
+        android:textSize="20sp" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/friend_search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        app:queryHint="@string/put_friend_email"
+        android:background="@drawable/friend_list_border"
         app:iconifiedByDefault="false"
         app:queryBackground="@color/transparent"
-        android:background="@drawable/friend_list_border"/>
+        app:queryHint="@string/put_friend_email" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchEmail_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="200dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        tools:listitem="@layout/item_email_list" />
 
     <Button
         android:id="@+id/friend_invite_btn"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:text="@string/invite_with_kakao"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_gravity="center" />
+        android:text="@string/invite_with_kakao" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="25dp"
-        android:gravity="center">
+        android:paddingBottom="25dp">
 
         <TextView
             android:id="@+id/logout_tv"
-            android:text="@string/logout"
-            android:textSize="17sp"
-            android:layout_gravity="bottom"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/logout"
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/withdraw_tv"
-            android:text="@string/withdraw"
-            android:layout_marginStart="50dp"
-            android:textSize="17sp"
-            android:layout_gravity="bottom"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="50dp"
+            android:text="@string/withdraw"
+            android:textSize="17sp" />
 
     </LinearLayout>
 

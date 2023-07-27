@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sendalarm.data.entity.SendRecord
+import com.example.sendalarm.data.entity.Record
 import com.example.sendalarm.databinding.FragmentRecordListBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -42,7 +42,7 @@ class RecordListFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         val currentDate= LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-        rvAdapter.sendItem(listOf(SendRecord("s","수비니","머하노", null,currentDate)))
+        rvAdapter.sendItem(listOf(Record("s","수비니","머하노", null,currentDate)))
 
         rvAdapter.setItemClickListener(object : RecordListAdapter.ClickInterface {
             override fun onRecordClicked() {

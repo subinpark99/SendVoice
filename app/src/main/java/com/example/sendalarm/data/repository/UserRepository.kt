@@ -5,6 +5,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Base64
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.sendalarm.data.entity.User
@@ -151,6 +152,31 @@ open class UserRepository @Inject constructor(
         }.addOnFailureListener {
             failure(it.toString())
         }
+    }
+
+    fun logout() {
+        auth.signOut()
+    }
+
+
+    fun getUserList(userEmail: String): MutableLiveData<MutableList<User>?> {
+
+        val userList = MutableLiveData<MutableList<User>?>()
+        fireStore.collection("User")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val users = mutableListOf<User>()
+                for (document in querySnapshot) {
+                    val user = document.toObject(User::class.java)
+                    //  if (user.email != userEmail)
+                    users.add(user)
+                }
+                userList.value = users
+            }
+            .addOnFailureListener {
+                userList.value = null
+            }
+        return userList
     }
 
 

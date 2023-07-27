@@ -4,16 +4,16 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sendalarm.data.entity.SendRecord
+import com.example.sendalarm.data.entity.Record
 import com.example.sendalarm.databinding.ItemRecordListBinding
 
 class RecordListAdapter :
     RecyclerView.Adapter<RecordListAdapter.ViewHolder>() {
 
-    private val items = arrayListOf<SendRecord>()
+    private val items = arrayListOf<Record>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun sendItem(it: List<SendRecord>) {
+    fun sendItem(it: List<Record>) {
         items.clear()
         items.addAll(it)
         notifyDataSetChanged()
@@ -54,7 +54,7 @@ class RecordListAdapter :
 
     inner class ViewHolder(val binding: ItemRecordListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: SendRecord) {
+        fun bind(item: Record) {
             binding.usernameTv.text = item.receiverName
             binding.titleTv.text = item.title
             binding.sendDateTv.text = item.time.toString()

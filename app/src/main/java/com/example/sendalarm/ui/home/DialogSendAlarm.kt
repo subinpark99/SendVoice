@@ -7,10 +7,13 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.DialogFragment
 import com.example.sendalarm.databinding.DialogSendAlarmBinding
 
-class DialogSendAlarm: DialogFragment(), View.OnClickListener {
+class DialogSendAlarm : DialogFragment(), View.OnClickListener {
 
     private lateinit var binding: DialogSendAlarmBinding
 
@@ -30,10 +33,21 @@ class DialogSendAlarm: DialogFragment(), View.OnClickListener {
         return binding.root
     }
 
-    private fun bind()
-    {
+    private fun bind() {
+
         binding.closeBtn.setOnClickListener {
             dismiss()
+        }
+
+        binding.recordTitleEt.setOnEditorActionListener{ _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // 키보드 내림
+                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow( binding.recordTitleEt.windowToken, 0)
+                true
+            } else {
+                false
+            }
         }
     }
 

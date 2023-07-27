@@ -2,7 +2,7 @@ package com.example.sendalarm.util
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.sendalarm.data.repository.SendRecordRepository
+import com.example.sendalarm.data.repository.RecordRepository
 import com.example.sendalarm.data.repository.UserRepository
 
 import com.google.firebase.auth.FirebaseAuth
@@ -11,7 +11,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
@@ -55,8 +54,8 @@ internal object AppModule {
         auth: FirebaseAuth,
         fireStore: FirebaseFirestore,
         fcm: FirebaseMessaging
-    ): SendRecordRepository {
-        return SendRecordRepository(auth,fireStore, fcm)
+    ): RecordRepository {
+        return RecordRepository(auth,fireStore, fcm)
     }
 
     @Provides

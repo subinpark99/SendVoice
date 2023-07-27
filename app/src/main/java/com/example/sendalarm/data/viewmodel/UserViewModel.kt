@@ -26,4 +26,12 @@ class UserViewModel @Inject constructor(private val repo: UserRepository) : View
             })
         }
 
+    fun getUserList(userEmail: String): MutableLiveData<MutableList<User>?> {
+        return repo.getUserList(userEmail)
+    }
+
+    fun logout() {
+        return repo.logout()
+    }
+
 }
