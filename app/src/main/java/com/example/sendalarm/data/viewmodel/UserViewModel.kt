@@ -1,5 +1,6 @@
 package com.example.sendalarm.data.viewmodel
 
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,4 +35,15 @@ class UserViewModel @Inject constructor(private val repo: UserRepository) : View
         return repo.logout()
     }
 
+    fun checkInviteLink(intent: Intent){
+        viewModelScope.launch{
+            repo.checkInviteLink(intent)
+        }
+    }
+
+    fun invite(email:String,name:String){
+        viewModelScope.launch{
+            repo.invite(email,name)
+        }
+    }
 }

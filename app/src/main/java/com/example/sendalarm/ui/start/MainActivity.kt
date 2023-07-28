@@ -3,7 +3,9 @@ package com.example.sendalarm.ui.start
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import com.example.sendalarm.R
+import com.example.sendalarm.data.viewmodel.UserViewModel
 import com.example.sendalarm.ui.recordlist.RecordListFragment
 import com.example.sendalarm.databinding.ActivityMainBinding
 import com.example.sendalarm.ui.home.HomeFragment
@@ -17,6 +19,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: UserViewModel by viewModels()
 
     @Inject
     lateinit var preference: Preference
@@ -26,6 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        checkInviteLink()
 
         initViewPager()
     }
@@ -50,5 +55,9 @@ class MainActivity : AppCompatActivity() {
                 2 -> tab.setIcon(R.drawable.icon_setting)
             }
         }.attach()
+    }
+
+    private fun checkInviteLink(){
+        viewModel.checkInviteLink(intent)
     }
 }

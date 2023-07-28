@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sendalarm.data.entity.User
 import com.example.sendalarm.data.viewmodel.UserViewModel
 import com.example.sendalarm.databinding.FragmentSettingBinding
 import com.example.sendalarm.ui.start.SplashActivity
@@ -46,15 +48,22 @@ class SettingFragment : Fragment() {
 
         onRecyclerView()
         binding.friendSearchView.setOnQueryTextListener(searchViewTextListener)
-        setSearchView()
+
 
         return binding.root
     }
 
     private fun bind() {
 
-        binding.usernameTv.text = preference.getUser()!!.userName
-        binding.useremailTv.text = preference.getUser()!!.email
+        val userEmail = preference.getUser()!!.email
+        val userName = preference.getUser()!!.userName
+
+        binding.useremailTv.text = userEmail
+        binding.usernameTv.text = userName
+
+
+        val searchView = binding.friendSearchView
+        searchView.isSubmitButtonEnabled = true
 
         binding.logoutTv.setOnClickListener {
             viewModel.logout()
@@ -76,13 +85,20 @@ class SettingFragment : Fragment() {
                     .setPositiveButton(
                         "확인"
                     ) { dialog, _ ->
+
+                        viewModel.invite(userEmail,userName)
+
                         dialog.dismiss()
+                        searchView.setQuery("", false)
+                        searchView.clearFocus()
+                        selectEmail = ""
+
                     }
                     .setNegativeButton(
                         "취소"
                     ) { dialog, _ ->
-                        dialog.dismiss()
 
+                        dialog.dismiss()
                     }
                 builder.create()
                 builder.show()
@@ -94,6 +110,8 @@ class SettingFragment : Fragment() {
         }
     }
 
+
+    @SuppressLint("NotifyDataSetChanged")
     private fun onRecyclerView() {
 
         binding.searchEmailRv.apply {
@@ -104,25 +122,28 @@ class SettingFragment : Fragment() {
         val userEmail = preference.getUser()!!.email
         viewModel.getUserList(userEmail).observe(viewLifecycleOwner) {
             if (it != null) {
+                it.add(User("", "", "수현", "psb8909@naver.com"))
+                it.add(User("", "", "진우", "jinwoo@naver.com"))
+                it.add(User("", "", "진우", "jinwoo2@naver.com"))
+                it.add(User("", "", "진우", "jinwoo3@naver.com"))
                 adapterRv.getUserList(it)
+
+                Log.d("s",it.toString())
             }
         }
 
         adapterRv.setItemClickListener(object : UserListAdapter.InContentInterface {
             override fun onUserClicked(clicked: Boolean, email: String) {
-                if (clicked) {
-                    selectEmail = email
+
+                selectEmail = if (clicked) {
+                    email
+                } else {
+                    ""
                 }
             }
         })
     }
 
-
-    private fun setSearchView() {
-        val searchView = binding.friendSearchView
-        searchView.isSubmitButtonEnabled = true
-
-    }
 
     private var searchViewTextListener: SearchView.OnQueryTextListener =
 
@@ -130,6 +151,7 @@ class SettingFragment : Fragment() {
 
             @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextSubmit(s: String): Boolean {
+
                 adapterRv.filter.filter(s)
 
                 if (adapterRv.itemCount == 0) {

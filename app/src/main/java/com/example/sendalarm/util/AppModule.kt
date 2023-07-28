@@ -6,6 +6,8 @@ import com.example.sendalarm.data.repository.RecordRepository
 import com.example.sendalarm.data.repository.UserRepository
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.dynamiclinks.DynamicLink
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.Module
@@ -39,13 +41,20 @@ internal object AppModule {
 
     @Singleton
     @Provides
+    fun provideDynamicLink(): FirebaseDynamicLinks{
+        return FirebaseDynamicLinks.getInstance()
+    }
+
+    @Singleton
+    @Provides
     fun provideUserRepository(
         auth: FirebaseAuth,
         fireStore: FirebaseFirestore,
         fcm: FirebaseMessaging,
+        dynamicLink: FirebaseDynamicLinks,
         context: Context
     ): UserRepository {
-        return UserRepository(auth, fireStore, fcm, context)
+        return UserRepository(auth, fireStore, fcm, dynamicLink,context)
     }
 
     @Singleton

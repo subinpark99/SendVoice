@@ -17,8 +17,9 @@ class UserListAdapter :
     private val items = ArrayList<User>()
     private var filterItems = ArrayList<User>()
 
-
     var setFilter = ItemFilter()
+
+    private var selectedPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             UserListAdapter.ViewHolder {
@@ -34,10 +35,31 @@ class UserListAdapter :
         val userList = filterItems[position]
         holder.bind(userList)
 
+        holder.isSelected = selectedPosition == position
+
+        if (selectedPosition == position) {
+            holder.isSelected = true
+            holder.itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    holder.itemView.context,
+                    R.color.light_gray
+                )
+            )
+        } else {
+            holder.isSelected = false
+            holder.itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    holder.itemView.context,
+                    R.color.white
+                )
+            )
+        }
         holder.itemView.setOnClickListener {
+            if (selectedPosition != position) {
+                notifyItemChanged(selectedPosition)
+            }
 
             holder.isSelected = !holder.isSelected
-
             if (holder.isSelected) {
                 holder.itemView.setBackgroundColor(
                     ContextCompat.getColor(
@@ -54,8 +76,11 @@ class UserListAdapter :
                 )
             }
 
+            selectedPosition = if (holder.isSelected) position else -1
+
             itemClickListener.onUserClicked(holder.isSelected, userList.email)
         }
+
     }
 
     override fun getFilter(): Filter {
@@ -69,6 +94,7 @@ class UserListAdapter :
 
         fun bind(user: User) {
             binding.user = user
+
         }
     }
 
@@ -121,7 +147,7 @@ class UserListAdapter :
 
     private lateinit var itemClickListener: InContentInterface
     fun setItemClickListener(myItemClickListener: InContentInterface) {
-        itemClickListener = myItemClickListener
+        this.itemClickListener = myItemClickListener
     }
 
 }
