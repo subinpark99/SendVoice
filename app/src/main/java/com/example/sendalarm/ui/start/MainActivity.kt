@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        checkInviteLink()
-
         initViewPager()
     }
 
@@ -57,7 +55,5 @@ class MainActivity : AppCompatActivity() {
         }.attach()
     }
 
-    private fun checkInviteLink(){
-        viewModel.checkInviteLink(intent)
-    }
+
 }

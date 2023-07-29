@@ -39,11 +39,6 @@ internal object AppModule {
         return FirebaseMessaging.getInstance()
     }
 
-    @Singleton
-    @Provides
-    fun provideDynamicLink(): FirebaseDynamicLinks{
-        return FirebaseDynamicLinks.getInstance()
-    }
 
     @Singleton
     @Provides
@@ -51,10 +46,9 @@ internal object AppModule {
         auth: FirebaseAuth,
         fireStore: FirebaseFirestore,
         fcm: FirebaseMessaging,
-        dynamicLink: FirebaseDynamicLinks,
         context: Context
     ): UserRepository {
-        return UserRepository(auth, fireStore, fcm, dynamicLink,context)
+        return UserRepository(auth, fireStore, fcm, context)
     }
 
     @Singleton

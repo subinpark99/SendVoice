@@ -105,8 +105,11 @@ dependencies {
     // ViewPager2
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
 
-    // kakao login
-    implementation "com.kakao.sdk:v2-all:2.15.0"
+    // kakao
+    implementation "com.kakao.sdk:v2-user:2.15.0" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-talk:2.15.0" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-link:2.9.0" // 메시지 (카카오링크)
 
     implementation 'com.android.volley:volley:1.2.1'
+
 }

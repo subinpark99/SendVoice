@@ -35,15 +35,9 @@ class UserViewModel @Inject constructor(private val repo: UserRepository) : View
         return repo.logout()
     }
 
-    fun checkInviteLink(intent: Intent){
-        viewModelScope.launch{
-            repo.checkInviteLink(intent)
-        }
-    }
-
-    fun invite(email:String,name:String){
-        viewModelScope.launch{
-            repo.invite(email,name)
+    fun sendKakaoLink(username: String) {
+        viewModelScope.launch {
+            repo.sendKakaoLink(username)
         }
     }
 }

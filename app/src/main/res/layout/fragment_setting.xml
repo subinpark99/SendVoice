@@ -37,33 +37,33 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/invite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/search_id"
-        android:textSize="20sp" />
+<!--    <TextView-->
+<!--        android:id="@+id/invite"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:text="@string/search_id"-->
+<!--        android:textSize="20sp" />-->
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/friend_search_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:background="@drawable/friend_list_border"
-        app:iconifiedByDefault="false"
-        app:queryBackground="@color/transparent"
-        app:queryHint="@string/put_friend_email" />
+<!--    <androidx.appcompat.widget.SearchView-->
+<!--        android:id="@+id/friend_search_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="12dp"-->
+<!--        android:background="@drawable/friend_list_border"-->
+<!--        app:iconifiedByDefault="false"-->
+<!--        app:queryBackground="@color/transparent"-->
+<!--        app:queryHint="@string/put_friend_email" />-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchEmail_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="200dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        tools:listitem="@layout/item_email_list" />
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/searchEmail_rv"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:maxHeight="200dp"-->
+<!--        android:paddingStart="20dp"-->
+<!--        android:paddingEnd="20dp"-->
+<!--        tools:listitem="@layout/item_email_list" />-->
 
     <Button
         android:id="@+id/friend_invite_btn"

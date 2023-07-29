@@ -35,22 +35,15 @@
         <activity
             android:name=".ui.start.MainActivity"
             android:exported="true">
-            <intent-filter android:autoVerify="true">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <!-- setLink()에 전달하는 링크와 동일한 host, path, scheme -->
-                <data
-                    android:host="sendalarm.page.link"
-                    android:path="/invite"
-                    android:scheme="https" />
+                <category android:name="android.intent.category.LAUNCHER" />
 
                 <data
-                    android:host="sendalarm.page.link"
-                    android:path="/invite"
-                    android:scheme="http" />
+                    android:scheme="${KAKAO_APP_KEY}"
+                    android:host="kakaolink" />
             </intent-filter>
         </activity>
 
